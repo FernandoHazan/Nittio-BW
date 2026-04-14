@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somos BW</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #080808;
+    --dark: #0e0e0e;
+    --card: #111111;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.18);
+    --gold: #c9a96e;
+    --gold-light: #e8d4a8;
+    --gold-dim: rgba(201,169,110,0.15);
+    --white: #f5f0e8;
+    --muted: rgba(245,240,232,0.45);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,169,110,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 20% 80%, rgba(201,169,110,0.04) 0%, transparent 60%),
+      linear-gradient(180deg, #080808 0%, #0d0b09 50%, #080808 100%);
+  }
+
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-lines::before,
+  .hero-lines::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border: 0.5px solid rgba(201,169,110,0.12);
+  }
+
+  .hero-lines::before {
+    width: 700px; height: 700px;
+    top: 50%; transform: translate(-50%, -50%);
+  }
+
+  .hero-lines::after {
+    width: 1000px; height: 1000px;
+    top: 50%; transform: translate(-50%, -50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(72px, 10vw, 140px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 8px;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 20px;
+    margin-bottom: 56px;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    transition: all 0.4s ease;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 0.5px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 60px;
+    margin: 80px 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .divider-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 80px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .section-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  /* ── MANIFESTO ── */
+  .manifesto {
+    padding: 120px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .manifesto-quote {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--white);
+    border-left: 1px solid var(--gold);
+    padding-left: 36px;
+  }
+
+  .manifesto-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--muted);
+  }
+
+  .manifesto-text p + p {
+    margin-top: 20px;
+  }
+
+  /* ── NUMBERS ── */
+  .numbers {
+    padding: 80px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .number-item {
+    background: var(--dark);
+    padding: 52px 40px;
+    text-align: center;
+  }
+
+  .number-value {
+    font-family: var(--serif);
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .number-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── EVENTS GRID ── */
+  .events-section {
+    padding: 80px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 56px;
+  }
+
+  .event-card {
+    background: var(--card);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .event-card:hover {
+    background: #141414;
+  }
+
+  .event-card:hover::before {
+    opacity: 1;
+  }
+
+  .event-number {
+    font-family: var(--serif);
+    font-size: 64px;
+    font-weight: 300;
+    color: rgba(201,169,110,0.1);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .event-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .event-detail {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .event-desc {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    padding: 120px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 72px;
+  }
+
+  .exp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .exp-icon {
+    width: 48px;
+    height: 48px;
+    border: 0.5px solid var(--border-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  .exp-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--white);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .exp-desc {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title {
+    margin: 0 auto 20px;
+    max-width: 700px;
+  }
+
+  .cta-section .section-body {
+    margin: 0 auto 48px;
+    max-width: 480px;
+    text-align: center;
+  }
+
+  .cta-powered {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cta-powered-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .cta-powered-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 48px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.2);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 24px 32px; }
+    section, .manifesto, .numbers, .events-section, .experience, .cta-section { padding-left: 32px; padding-right: 32px; }
+    .manifesto { grid-template-columns: 1fr; gap: 40px; }
+    .numbers { grid-template-columns: 1fr; }
+    .events-grid { grid-template-columns: 1fr; }
+    .experience-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 32px; }
+    .divider { padding: 0 32px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 56px; }
+    .experience-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Somos BW</a>
+  <span class="nav-tag">Est. Santa Catarina</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Uma marca. Uma experiência.</p>
+    <h1 class="hero-title">Somos<br><em>BW</em></h1>
+    <p class="hero-subtitle">Onde o sofisticado encontra o inesquecível.</p>
+    <a href="#manifesto" class="hero-cta">Conheça a marca</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-diamond"></div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- MANIFESTO -->
+<div class="manifesto" id="manifesto">
+  <div class="manifesto-quote">
+    "Não criamos festas.<br>Criamos memórias que você vai querer reviver."
+  </div>
+  <div class="manifesto-text">
+    <p>A Somos BW nasceu de uma crença simples: entretenimento de verdade transcende o momento. Cada evento é uma curadoria — de artistas, de experiências, de pessoas.</p>
+    <p>Com um público que exige o melhor e shows nacionais que marcam gerações, a BW consolidou-se como a referência em entretenimento premium de Santa Catarina.</p>
+    <p>Aqui, cada detalhe importa. Cada noite é única. Cada encontro é intencional.</p>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div class="number-item">
+    <div class="number-value">30<span style="font-size:0.5em">+</span></div>
+    <div class="number-label">Anos de referência cultural</div>
+  </div>
+  <div class="number-item">
+    <div class="number-value">100<span style="font-size:0.5em">%</span></div>
+    <div class="number-label">Shows nacionais de alto calibre</div>
+  </div>
+  <div class="number-item">
+    <div class="number-value">SC</div>
+    <div class="number-label">Epicentro do entretenimento premium</div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="events-section">
+  <p class="section-eyebrow">Nossa essência</p>
+  <h2 class="section-title">O que nos <em>define</em></h2>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-number">01</div>
+      <h3 class="event-name">Curadoria</h3>
+      <p class="event-detail">Seleção rigorosa</p>
+      <p class="event-desc">Cada artista, cada produção e cada detalhe é escolhido a dedo. Nada é aleatório. Tudo é intencional.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-number">02</div>
+      <h3 class="event-name">Comunidade</h3>
+      <p class="event-detail">Público seleto</p>
+      <p class="event-desc">Mais do que um evento, somos o encontro de pessoas que compartilham o mesmo gosto pelo extraordinário.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-number">03</div>
+      <h3 class="event-name">Legado</h3>
+      <p class="event-detail">Memórias que ficam</p>
+      <p class="event-desc">Cada noite BW torna-se uma referência. Uma data no calendário que as pessoas esperam o ano inteiro.</p>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="experience">
+  <p class="section-eyebrow">A experiência BW</p>
+  <h2 class="section-title">Antes, durante<br>e <em>depois</em></h2>
+  <div class="experience-grid">
+    <div class="exp-item">
+      <div class="exp-icon">◈</div>
+      <p class="exp-label">Antecipação</p>
+      <p class="exp-desc">A experiência começa muito antes de você entrar. O desejo é parte do evento.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">◉</div>
+      <p class="exp-label">Presença</p>
+      <p class="exp-desc">Cada momento é projetado para ser vivido plenamente. Nada passa despercebido.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">◇</div>
+      <p class="exp-label">Conexão</p>
+      <p class="exp-desc">Pessoas certas, no lugar certo, no momento certo. Isso é o que a BW proporciona.</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">◎</div>
+      <p class="exp-label">Memória</p>
+      <p class="exp-desc">O que acontece numa noite BW permanece muito além dela. É sobre o que você vai contar depois.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-diamond"></div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="section-eyebrow">Próximo capítulo</p>
+  <h2 class="section-title">A experiência<br>começa <em>antes</em></h2>
+  <p class="section-body">A Somos BW e a Nittio acreditam na mesma coisa: o evento começa muito antes do portão abrir.</p>
+  <a href="#" class="hero-cta">Quero fazer parte</a>
+  <div class="cta-powered">
+    <span class="cta-powered-label">Powered by</span>
+    <span class="cta-powered-logo">Nittio</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Somos BW</span>
+  <span class="footer-copy">© 2025 Somos BW · Santa Catarina, Brasil</span>
+</footer>
+
+<script>
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.style.opacity = '1';
+        el.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.number-item, .event-card, .exp-item, .manifesto-quote, .manifesto-text').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
